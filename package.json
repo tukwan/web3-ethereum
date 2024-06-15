@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@usedapp/core": "^1.2.16",
+    "cheerio": "^1.0.0-rc.12",
     "e": "^0.2.33",
     "ethers": "5.7.2",
     "next": "14.2.4",

@@ -16,6 +16,8 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
   const { activateBrowserWallet, account, library } = useEthers()
   const [isCollecting, setIsCollecting] = useState(false)
   const [collected, setCollected] = useState(false)
+  const [tooltip, setTooltip] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (account) {
@@ -43,8 +45,27 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
     setIsCollecting(false)
   }
 
+  const handleMouseEnter = async () => {
+    if (!tooltip) {
+      setIsLoading(true)
+      try {
+        const response = await fetch(`/api/pokemon/${pokemon.name}`)
+        const data = await response.json()
+
+        console.log("data", data.basicInfo)
+
+        setTooltip(data.basicInfo)
+      } catch (error) {
+        console.error("Error fetching tooltip:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+  }
+
   return (
     <div className="p-4 border rounded shadow hover:shadow-md">
+      <img src={pokemon.image} alt={name} className="w-24 h-24 mx-auto" />
       <p className="font-semibold text-lg">{name}</p>
       <div className="mt-2">
         <p className="font-semibold">Abilities:</p>
@@ -65,7 +86,15 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
           {isCollecting ? "Collecting..." : "Collect"}
         </button>
       )}
-      <p className="mt-2 text-gray-600">Details</p>
+      <p className="mt-2 text-gray-600" onMouseEnter={handleMouseEnter}>
+        Details
+      </p>
+      {tooltip && (
+        <div className="">
+          <h4 className="text-md font-bold mb-2">{pokemon.name} Tooltip</h4>
+          <p className="text-sm whitespace-pre-line">{tooltip}</p>
+        </div>
+      )}
     </div>
   )
 }
