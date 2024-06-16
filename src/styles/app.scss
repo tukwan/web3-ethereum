@@ -1,0 +1,28 @@
+// $color-blue: #d9eef3;
+// $color-lime: #82edcc;
+// $color-mint: #2fe4ab;
+// $color-seafoam: #9cc2c9;
+// $color-slate: #475e64;
+// $color-steel: #182d32;
+// $color-midnight: #243d42;
+// $color-charcoal: #111f22;
+// $color-navy: #091011;
+
+body {
+  font-family: "DM Sans", sans-serif;
+  color: white;
+}
+
+.text-primary {
+  // color: $primary-color;
+}
+
+.text-pokemon {
+  font-size: 28px;
+  line-height: 24px;
+}
+
+.btn-primary {
+  // background-color: $color-mint;
+  color: #091011;
+}

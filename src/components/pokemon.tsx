@@ -20,6 +20,15 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    const collectedPokemons = JSON.parse(
+      localStorage.getItem("collectedPokemons") || "[]"
+    )
+    if (collectedPokemons.includes(name)) {
+      setCollected(true)
+    }
+  }, [name])
+
+  useEffect(() => {
     if (account) {
       console.log("Connected account:", account)
     }
@@ -34,9 +43,19 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
     setIsCollecting(true)
     try {
       const signer = library.getSigner()
-      const message = `Collecting ${pokemon.name}`
+      const message = `Collecting ${name}`
       const signature = await signer.signMessage(message)
       console.log("Message signed:", { message, signature })
+
+      // Save to local storage
+      const collectedPokemons = JSON.parse(
+        localStorage.getItem("collectedPokemons") || "[]"
+      )
+      collectedPokemons.push(name)
+      localStorage.setItem(
+        "collectedPokemons",
+        JSON.stringify(collectedPokemons)
+      )
 
       setCollected(true)
     } catch (error) {
@@ -52,9 +71,7 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
         const response = await fetch(`/api/pokemon/${pokemon.name}`)
         const data = await response.json()
 
-        console.log("data", data.basicInfo)
-
-        setTooltip(data.basicInfo)
+        setTooltip(data.info)
       } catch (error) {
         console.error("Error fetching tooltip:", error)
       } finally {

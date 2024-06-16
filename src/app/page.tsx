@@ -1,5 +1,5 @@
 import { WalletConnect } from "@/components/wallet-connect"
-import { getPokemons, getPokemonDetails } from "@/services/pokemon"
+import { getPokemonList, getPokemonDetails } from "@/services/pokemon"
 import { Pokemon } from "@/components/pokemon"
 import { Search } from "@/components/search"
 
@@ -17,7 +17,7 @@ const loadPokemonDetails = async (pokemon: { name: string }) => {
 const PokemonsPage = async ({ searchParams }) => {
   const searchQuery = searchParams.search || ""
 
-  const pokemons = await getPokemons()
+  const pokemons = await getPokemonList()
 
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -33,8 +33,8 @@ const PokemonsPage = async ({ searchParams }) => {
       <h2 className="text-xl font-bold mt-6 mb-4">Pokémon List</h2>
       <Search searchQuery={searchQuery} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {pokemonsWithDetails.map((pokemon, index) => (
-          <Pokemon key={index} pokemon={pokemon} />
+        {pokemonsWithDetails.map((pokemon) => (
+          <Pokemon key={pokemon.name} pokemon={pokemon} />
         ))}
       </div>
     </div>

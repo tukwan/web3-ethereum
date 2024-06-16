@@ -6,8 +6,8 @@ import { config } from "@/config"
 const configDApp: Config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: `https://mainnet.infura.io/v3/${config.infuraProjectId}`,
-    [Sepolia.chainId]: `https://sepolia.infura.io/v3/${config.infuraProjectId}`,
+    [Mainnet.chainId]: `https://mainnet.infura.io/v3/${config.infuraId}`,
+    [Sepolia.chainId]: `https://sepolia.infura.io/v3/${config.infuraId}`,
   },
 }
 
