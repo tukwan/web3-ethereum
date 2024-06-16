@@ -1,22 +1,26 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useEffect } from "react"
 import { useEthers } from "@usedapp/core"
+import { Button } from "@/components/button"
+import { ArrowIcon } from "@/components/icons"
 
-type PokemonProps = {
-  pokemon: {
-    name: string
-    abilities: string[]
-    image: string
-  }
+type Pokemon = {
+  name: string
+  abilities: string[]
+  image: string
 }
 
-export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
+type Props = {
+  pokemon: Pokemon
+}
+
+export const Pokemon = ({ pokemon }: Props) => {
   const { name, abilities, image } = pokemon
 
   const { activateBrowserWallet, account, library } = useEthers()
-  const [isCollecting, setIsCollecting] = useState(false)
-  const [collected, setCollected] = useState(false)
+  const [isCollected, setIsCollected] = useState(false)
   const [tooltip, setTooltip] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,12 +29,11 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
       localStorage.getItem("collectedPokemons") || "[]"
     )
     if (collectedPokemons.includes(name)) {
-      setCollected(true)
+      setIsCollected(true)
     }
   }, [name])
 
   const handleCollect = async () => {
-    setIsCollecting(true)
     try {
       const signer = library.getSigner()
       const message = `Collecting ${name}`
@@ -46,11 +49,10 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
         JSON.stringify(collectedPokemons)
       )
 
-      setCollected(true)
+      setIsCollected(true)
     } catch (error) {
       console.error("Message signing failed:", error)
     }
-    setIsCollecting(false)
   }
 
   const handleMouseEnter = async () => {
@@ -70,37 +72,41 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
   }
 
   return (
-    <div className="p-4 border rounded shadow hover:shadow-md">
-      <img src={image} alt={name} className="w-24 h-24 mx-auto" />
-      <p className="font-semibold text-lg">{name}</p>
-      <div className="mt-2">
-        <p className="font-semibold">Abilities:</p>
-        <ul className="list-disc list-inside">
+    <div className="max-w-[395px] h-[506px] rounded-xl bg-steel text-center">
+      <Image
+        src={image}
+        alt="Pokemon image"
+        width={96}
+        height={96}
+        className="w-full h-[222px] bg-charcoal rounded-t-xl"
+      />
+
+      <div className="p-8">
+        <h5 className="font-bold text-lg capitalize mb-2">{name}</h5>
+        <ul className="font-medium text-seafoam">
           {abilities.map((ability, index) => (
             <li key={index}>{ability}</li>
           ))}
         </ul>
-      </div>
-      {collected ? (
-        <p className="mt-2 text-green-500">Collected</p>
-      ) : (
-        <button
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
-          onClick={handleCollect}
-          disabled={isCollecting}
+
+        <Button className="my-8" onClick={handleCollect} disabled={isCollected}>
+          {isCollected ? "Collected" : "Collect"}
+        </Button>
+
+        <p
+          className="text-mint cursor-pointer flex items-center justify-center"
+          onMouseEnter={handleMouseEnter}
         >
-          {isCollecting ? "Collecting..." : "Collect"}
-        </button>
-      )}
-      <p className="mt-2 text-gray-600" onMouseEnter={handleMouseEnter}>
-        Details
-      </p>
-      {tooltip && (
-        <div className="">
-          <h4 className="text-md font-bold mb-2">{pokemon.name} Tooltip</h4>
-          <p className="text-sm whitespace-pre-line">{tooltip}</p>
-        </div>
-      )}
+          Details
+          <ArrowIcon className="ml-2" />
+        </p>
+        {tooltip && (
+          <div className="mt-2 p-2 bg-gray-800 rounded">
+            <h4 className="text-md font-bold mb-2">{pokemon.name} Tooltip</h4>
+            <p className="text-sm whitespace-pre-line">{tooltip}</p>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

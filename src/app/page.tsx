@@ -7,9 +7,10 @@ const loadPokemonDetails = async (pokemon: { name: string }) => {
 
   const image = details.sprites.front_default
 
-  const abilities = details.abilities.map(
-    (ability: { ability: { name: string } }) => ability.ability.name
-  )
+  const abilities = details.abilities
+    .map((ability: { ability: { name: string } }) => ability.ability.name)
+    .slice(0, 3)
+
   return { ...pokemon, abilities, image }
 }
 

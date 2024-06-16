@@ -19,7 +19,7 @@ export const Search = ({ searchQuery }: { searchQuery: string }) => {
 
   return (
     <div className="flex items-center mb-12">
-      <h2 className="text-title">Search</h2>
+      <h3 className="text-h3">Search</h3>
       <Input value={search} onChange={(e) => setSearch(e.target.value)} />
       <Button onClick={handleSearch}>Search</Button>
     </div>

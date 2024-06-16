@@ -4,7 +4,7 @@ export const Header = () => (
   <header>
     <div className="flex justify-center items-center py-8">
       <Image src="/logo.svg" alt="logo" width={108} height={24} />
-      <h3 className="ml-2 text-title-muted">Pokemon List</h3>
+      <h4 className="ml-2 text-h4-muted">Pokemon List</h4>
     </div>
     <div className="h-0.5 bg-steel"></div>
   </header>
