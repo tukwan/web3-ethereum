@@ -1,12 +1,12 @@
-interface ButtonProps {
+type Props = {
   children: React.ReactNode
   onClick: () => void
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
+export const Button = ({ children, onClick }: Props) => {
   return (
     <button
-      className="bg-mint text-charcoal py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none"
+      className="bg-mint text-charcoal py-3 px-6 rounded-md hover:bg-lime focus:outline-none font-bold"
       onClick={onClick}
     >
       {children}

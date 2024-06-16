@@ -1,4 +1,3 @@
-import { WalletConnect } from "@/components/wallet-connect"
 import { getPokemonList, getPokemonDetails } from "@/services/pokemon"
 import { Pokemon } from "@/components/pokemon"
 import { Search } from "@/components/search"
@@ -29,8 +28,6 @@ const PokemonsPage = async ({ searchParams }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <WalletConnect />
-      <h2 className="text-xl font-bold mt-6 mb-4">Pokémon List</h2>
       <Search searchQuery={searchQuery} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {pokemonsWithDetails.map((pokemon) => (

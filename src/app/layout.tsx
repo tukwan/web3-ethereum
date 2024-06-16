@@ -2,11 +2,11 @@ import "@/styles/globals.css"
 import "@/styles/app.scss"
 
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { DM_Sans } from "next/font/google"
 import { Providers } from "@/components/providers"
 import { Header } from "@/components/header"
 
-const inter = Inter({ subsets: ["latin"] })
+const dmSans = DM_Sans({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Pokemon",
@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-navy`}>
+      <body className={`${dmSans.className} bg-navy text-blue`}>
         <Header />
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mt-20">
           <Providers>{children}</Providers>
         </div>
       </body>

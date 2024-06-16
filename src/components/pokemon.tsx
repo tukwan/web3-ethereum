@@ -7,11 +7,12 @@ type PokemonProps = {
   pokemon: {
     name: string
     abilities: string[]
+    image: string
   }
 }
 
 export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
-  const { name, abilities } = pokemon
+  const { name, abilities, image } = pokemon
 
   const { activateBrowserWallet, account, library } = useEthers()
   const [isCollecting, setIsCollecting] = useState(false)
@@ -28,18 +29,7 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
     }
   }, [name])
 
-  useEffect(() => {
-    if (account) {
-      console.log("Connected account:", account)
-    }
-  }, [account])
-
   const handleCollect = async () => {
-    if (!account) {
-      activateBrowserWallet()
-      return
-    }
-
     setIsCollecting(true)
     try {
       const signer = library.getSigner()
@@ -47,7 +37,6 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
       const signature = await signer.signMessage(message)
       console.log("Message signed:", { message, signature })
 
-      // Save to local storage
       const collectedPokemons = JSON.parse(
         localStorage.getItem("collectedPokemons") || "[]"
       )
@@ -82,7 +71,7 @@ export const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
 
   return (
     <div className="p-4 border rounded shadow hover:shadow-md">
-      <img src={pokemon.image} alt={name} className="w-24 h-24 mx-auto" />
+      <img src={image} alt={name} className="w-24 h-24 mx-auto" />
       <p className="font-semibold text-lg">{name}</p>
       <div className="mt-2">
         <p className="font-semibold">Abilities:</p>
