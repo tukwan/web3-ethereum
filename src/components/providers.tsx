@@ -11,6 +11,6 @@ const configDApp: Config = {
   },
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <DAppProvider config={configDApp}>{children}</DAppProvider>
-}
+export const Providers = ({ children }: { children: React.ReactNode }) => (
+  <DAppProvider config={configDApp}>{children}</DAppProvider>
+)

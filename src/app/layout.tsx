@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { DM_Sans } from "next/font/google"
 import { Providers } from "@/components/providers"
 import { Header } from "@/components/header"
+import { WalletConnect } from "@/components/wallet-connect"
 
 const dmSans = DM_Sans({ subsets: ["latin"] })
 
@@ -21,10 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.className} bg-navy text-blue`}>
-        <Header />
-        <div className="container mx-auto px-4 mt-20">
-          <Providers>{children}</Providers>
-        </div>
+        <Providers>
+          <WalletConnect />
+          <Header />
+          <div className="container mx-auto px-4 mt-20 max-w-screen-2xl w-full">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   )

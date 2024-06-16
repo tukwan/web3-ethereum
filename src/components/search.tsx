@@ -1,11 +1,15 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useState, ChangeEvent, KeyboardEvent } from "react"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 
-export const Search = ({ searchQuery }: { searchQuery: string }) => {
+type Props = {
+  searchQuery: string
+}
+
+export const Search = ({ searchQuery }: Props) => {
   const router = useRouter()
   const [search, setSearch] = useState(searchQuery)
 
@@ -17,11 +21,26 @@ export const Search = ({ searchQuery }: { searchQuery: string }) => {
     }
   }
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") handleSearch()
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value)
+  }
+
   return (
-    <div className="flex items-center mb-12">
-      <h3 className="text-h3">Search</h3>
-      <Input value={search} onChange={(e) => setSearch(e.target.value)} />
-      <Button onClick={handleSearch}>Search</Button>
+    <div className="flex flex-col items-center mb-12 sm:flex-row justify-center">
+      <h3 className="text-h3 mb-4 sm:mb-0">Search</h3>
+      <Input
+        value={search}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        className="mb-4 sm:mb-0 sm:mr-4"
+      />
+      <Button onClick={handleSearch} className="w-full sm:w-auto">
+        Search
+      </Button>
     </div>
   )
 }

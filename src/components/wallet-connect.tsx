@@ -1,34 +1,36 @@
 "use client"
 
-import { useEthers, useEtherBalance } from "@usedapp/core"
-import { formatEther } from "ethers/lib/utils"
+import { useRef, useEffect } from "react"
+import { useEthers } from "@usedapp/core"
 
 export const WalletConnect = () => {
-  const { account, activateBrowserWallet, deactivate } = useEthers()
-  const balance = useEtherBalance(account)
+  const { activateBrowserWallet, active, isLoading, error } = useEthers()
+  const hasAttemptedRef = useRef(false)
+
+  useEffect(() => {
+    const connectWallet = () => {
+      if (isLoading || hasAttemptedRef.current) return
+      hasAttemptedRef.current = true
+
+      try {
+        activateBrowserWallet()
+      } catch (error) {
+        console.error("Failed to connect to MetaMask:", error)
+      }
+    }
+
+    connectWallet()
+  }, [isLoading, activateBrowserWallet])
+
+  if (active && !isLoading) return null
 
   return (
-    <div>
-      {account ? (
-        <div>
-          <p className="mb-2">Account: {account}</p>
-          <p className="mb-4">
-            Balance: {balance ? formatEther(balance) : "Loading..."} ETH
-          </p>
-          <button
-            onClick={deactivate}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Disconnect Wallet
-          </button>
-        </div>
-      ) : (
-        <button
-          onClick={activateBrowserWallet}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Connect Wallet
-        </button>
+    <div className="fixed top-6 right-4 p-3 text-sm bg-midnight rounded-md">
+      {isLoading && <p>Connecting to MetaMask...</p>}
+      {error && (
+        <p className="text-red-600">
+          Failed to connect to MetaMask. Try to refresh.
+        </p>
       )}
     </div>
   )
