@@ -31,7 +31,10 @@ export const PokemonTooltip = ({ pokemon, isVisible }: Props) => {
         isVisible ? "visible" : "hidden"
       )}
     >
-      <PokemonCard pokemon={pokemon} className="h-[400px]">
+      <PokemonCard
+        pokemon={pokemon}
+        className="h-[400px] w-[300px] sm:w-[395px] "
+      >
         {isLoading ? (
           <Spinner className="pt-4" />
         ) : (
