@@ -1,7 +1,7 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useState, ChangeEvent, KeyboardEvent } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 
@@ -11,13 +11,21 @@ type Props = {
 
 export const Search = ({ searchQuery }: Props) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [search, setSearch] = useState(searchQuery)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [searchParams])
 
   const handleSearch = () => {
-    if (search.trim()) {
-      router.push(`/?search=${search}`)
-    } else {
-      router.push(`/`)
+    const searchParam = searchParams.get("search") || ""
+    const trimSearch = search.trim()
+
+    if (trimSearch !== searchParam) {
+      setIsLoading(true)
+      router.push(trimSearch ? `/?search=${trimSearch}` : `/`)
     }
   }
 
@@ -39,7 +47,7 @@ export const Search = ({ searchQuery }: Props) => {
         className="mb-4 sm:mb-0 sm:mr-4"
       />
       <Button onClick={handleSearch} className="w-full sm:w-auto">
-        Search
+        {isLoading ? "Loading..." : "Search"}
       </Button>
     </div>
   )

@@ -31,14 +31,16 @@ export const PokemonControls = ({ pokemon }: Props) => {
       <Button className="my-8" onClick={handleCollect} disabled={isCollected}>
         {isCollected ? "Collected" : "Collect"}
       </Button>
-      <div
-        className="relative text-mint cursor-pointer flex justify-center items-center"
-        onMouseEnter={() => setIsTooltipVisible(true)}
-        onMouseLeave={() => setIsTooltipVisible(false)}
-      >
-        Details
-        <ArrowIcon className="ml-2" />
-        <PokemonTooltip pokemon={pokemon} isVisible={isTooltipVisible} />
+      <div className="flex justify-center relative">
+        <div
+          className=" text-mint cursor-pointer flex items-center"
+          onMouseEnter={() => setIsTooltipVisible(true)}
+          onMouseLeave={() => setIsTooltipVisible(false)}
+        >
+          Details
+          <ArrowIcon className="ml-2" />
+          <PokemonTooltip pokemon={pokemon} isVisible={isTooltipVisible} />
+        </div>
       </div>
     </>
   )
