@@ -1,19 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/button"
-import { ArrowIcon } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import { ArrowIcon } from "@/components/ui/icons"
 import { useCollecting } from "@/hooks/useCollecting"
 import { useSigning } from "@/hooks/useSigning"
 import { PokemonTooltip } from "./pokemon-tooltip"
-import type { Pokemon } from "./types"
+import type { PokemonData } from "./types"
 
 type Props = {
-  pokemon: Pokemon
+  pokemon: PokemonData
 }
 
 export const PokemonControls = ({ pokemon }: Props) => {
-  const { sign } = useSigning()
+  const { sign, signer } = useSigning()
   const { isCollected, collectPokemon } = useCollecting(pokemon.name)
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
 
@@ -28,7 +28,11 @@ export const PokemonControls = ({ pokemon }: Props) => {
 
   return (
     <>
-      <Button className="my-8" onClick={handleCollect} disabled={isCollected}>
+      <Button
+        className="my-8"
+        onClick={handleCollect}
+        disabled={isCollected || !signer}
+      >
         {isCollected ? "Collected" : "Collect"}
       </Button>
       <div className="flex justify-center relative">

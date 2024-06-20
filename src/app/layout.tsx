@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} bg-navy text-blue`}>
+      <body className={`${dmSans.className} antialiased bg-navy text-blue`}>
         <Providers>
           <WalletConnect />
           <Header />

@@ -1,28 +1,31 @@
-import { getPokemonList, getPokemonDetails } from "@/services/pokemon"
-import { PokemonItem } from "@/components/pokemon/pokemon-item"
+import { Suspense } from "react"
+import { getPokemonList } from "@/services/pokemon"
+import { PokemonLoader } from "@/components/pokemon/pokemon.loader"
 import { Search } from "@/components/search"
-import type { Pokemon } from "@/components/pokemon/types"
+import { PokemonPlaceholder } from "@/components/pokemon/pokemon.placeholder"
+import type { PokemonData } from "@/components/pokemon/types"
+
+export const revalidate = 3600
 
 type Props = {
-  searchParams: {
+  searchParams?: {
     search?: string
   }
 }
 
 const PokemonsPage = async ({ searchParams }: Props) => {
-  const searchQuery = searchParams.search || ""
-
+  const searchQuery = searchParams?.search || ""
   const allPokemons = await getPokemonList()
   const filteredPokemons = filterPokemons(allPokemons, searchQuery)
-  const pokemonsWithDetails = await Promise.all(
-    filteredPokemons.map(loadPokemonDetails)
-  )
+
   return (
     <>
       <Search searchQuery={searchQuery} />
       <div className="flex flex-wrap justify-center gap-x-12 gap-y-9">
-        {pokemonsWithDetails.map((pokemon) => (
-          <PokemonItem key={pokemon.name} pokemon={pokemon} />
+        {filteredPokemons.map((pokemon) => (
+          <Suspense key={pokemon.name} fallback={<PokemonPlaceholder />}>
+            <PokemonLoader pokemon={pokemon} />
+          </Suspense>
         ))}
       </div>
     </>
@@ -31,19 +34,9 @@ const PokemonsPage = async ({ searchParams }: Props) => {
 
 export default PokemonsPage
 
-const filterPokemons = (pokemons: Pokemon[], query: string) => {
+const filterPokemons = (pokemons: PokemonData[], query: string) => {
   if (!query) return pokemons
   return pokemons.filter((pokemon: { name: string }) =>
     pokemon.name.toLowerCase().includes(query.toLowerCase())
   )
-}
-
-const loadPokemonDetails = async (pokemon: Pokemon) => {
-  const details = await getPokemonDetails(pokemon.name)
-  const image = details.sprites.front_default
-  const abilities = details.abilities
-    .map((ability: { ability: { name: string } }) => ability.ability.name)
-    .slice(0, 3)
-
-  return { ...pokemon, abilities, image }
 }

@@ -16,5 +16,5 @@ export const useSigning = () => {
     }
   }
 
-  return { sign }
+  return { sign, signer }
 }

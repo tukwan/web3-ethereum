@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { cn, fetchFromApi } from "@/lib/utils"
-import { Spinner } from "@/components/spinner"
+import { Spinner } from "@/components/ui/spinner"
 import { PokemonCard } from "./pokemon-card"
-import type { Pokemon } from "./types"
+import type { PokemonData } from "./types"
 
 type Props = {
-  pokemon: Pokemon
+  pokemon: PokemonData
   isVisible: boolean
 }
 
@@ -36,7 +36,7 @@ export const PokemonTooltip = ({ pokemon, isVisible }: Props) => {
         className="h-[400px] w-[300px] sm:w-[395px] "
       >
         {isLoading ? (
-          <Spinner className="pt-4" />
+          <Spinner className="mt-4" />
         ) : (
           <p className="text-sm text-seafoam">{tooltipInfo}</p>
         )}

@@ -2,8 +2,9 @@
 
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react"
-import { Button } from "@/components/button"
-import { Input } from "@/components/input"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 
 type Props = {
   searchQuery: string
@@ -25,7 +26,7 @@ export const Search = ({ searchQuery }: Props) => {
 
     if (trimSearch !== searchParam) {
       setIsLoading(true)
-      router.push(trimSearch ? `/?search=${trimSearch}` : `/`)
+      router.push(trimSearch ? `/?search=${trimSearch}` : "/")
     }
   }
 
@@ -39,15 +40,22 @@ export const Search = ({ searchQuery }: Props) => {
 
   return (
     <div className="flex flex-col items-center mb-12 sm:flex-row justify-center">
-      <h3 className="text-h3 mb-4 sm:mb-0">Search</h3>
+      <label htmlFor="search" className="text-h3 mb-4 sm:mb-0">
+        Search
+      </label>
       <Input
+        id="search"
         value={search}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        placeholder="Search Pokemon..."
         className="mb-4 sm:mb-0 sm:mr-4"
       />
-      <Button onClick={handleSearch} className="w-full sm:w-auto">
-        {isLoading ? "Loading..." : "Search"}
+      <Button
+        onClick={handleSearch}
+        className="w-full sm:w-auto max-w-[300px] min-w-[103px]"
+      >
+        {isLoading ? <Spinner size={24} /> : "Search"}
       </Button>
     </div>
   )

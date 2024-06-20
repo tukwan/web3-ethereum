@@ -1,12 +1,12 @@
 import { PokemonControls } from "./pokemon-controls"
 import { PokemonCard } from "./pokemon-card"
-import type { Pokemon } from "./types"
+import type { PokemonData } from "./types"
 
 type Props = {
-  pokemon: Pokemon
+  pokemon: PokemonData
 }
 
-export const PokemonItem = ({ pokemon }: Props) => (
+export const Pokemon = ({ pokemon }: Props) => (
   <PokemonCard pokemon={pokemon} className="h-[506px]">
     <ul className="font-medium text-seafoam">
       {pokemon.abilities.map((ability, index) => (
