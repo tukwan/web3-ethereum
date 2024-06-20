@@ -1,32 +1,28 @@
-"use client"
-
-import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react"
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  Dispatch,
+  SetStateAction,
+  useState,
+} from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 
 type Props = {
   searchQuery: string
+  setSearchQuery: Dispatch<SetStateAction<string>>
 }
 
-export const Search = ({ searchQuery }: Props) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [search, setSearch] = useState(searchQuery)
+export const Search = ({ searchQuery, setSearchQuery }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    setIsLoading(false)
-  }, [searchParams])
-
   const handleSearch = () => {
-    const searchParam = searchParams.get("search") || ""
-    const trimSearch = search.trim()
+    const trimSearch = searchQuery.trim()
 
-    if (trimSearch !== searchParam) {
+    if (trimSearch !== searchQuery) {
       setIsLoading(true)
-      router.push(trimSearch ? `/?search=${trimSearch}` : "/")
+      setSearchQuery(trimSearch)
     }
   }
 
@@ -35,7 +31,7 @@ export const Search = ({ searchQuery }: Props) => {
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value)
+    setSearchQuery(event.target.value)
   }
 
   return (
@@ -45,7 +41,7 @@ export const Search = ({ searchQuery }: Props) => {
       </label>
       <Input
         id="search"
-        value={search}
+        value={searchQuery}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder="Search Pokemon..."
