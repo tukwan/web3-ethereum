@@ -6,7 +6,7 @@ Pokemon is a web application that allows users to view, list, and interact with 
 
 - [https://pokemon-vert-ten.vercel.app](https://pokemon-vert-ten.vercel.app)
 
-<img width="800" src="https://github.com/tukwan/pokemon/assets/7630720/51ae50ce-e109-4d07-a5c2-33dd52373cf5">
+<img width="800" src="https://github.com/tukwan/pokemon/assets/7630720/f2f0c02f-b8c0-4ec8-8c1c-305e959f8d2f">
 
 ## Features
 
@@ -28,7 +28,7 @@ Pokemon is a web application that allows users to view, list, and interact with 
 ## Getting Started
 
 - `yarn && yarn dev` (for development)
-- `yarn build && yarn start` (for production)
+- `yarn build && pnpm start` (for production)
 
 ## Environment Variables
 
