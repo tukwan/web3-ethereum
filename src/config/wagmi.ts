@@ -1,31 +1,15 @@
-import { http, cookieStorage, createConfig, createStorage } from "wagmi"
-import { mainnet, optimism, sepolia } from "wagmi/chains"
-import { injected, metaMask, walletConnect } from "wagmi/connectors"
+import { cookieStorage, createStorage } from "wagmi"
+import { mainnet, sepolia } from "wagmi/chains"
+import { getDefaultConfig } from "@rainbow-me/rainbowkit"
 
-export function getConfig() {
-  return createConfig({
-    chains: [mainnet, sepolia, optimism],
-    connectors: [
-      injected(),
-      // walletConnect({
-      //   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
-      // }),
-      // metaMask(),
-    ],
-    storage: createStorage({
-      storage: cookieStorage,
-    }),
-    ssr: true,
-    transports: {
-      [mainnet.id]: http(),
-      [sepolia.id]: http(),
-      [optimism.id]: http(),
-    },
-  })
-}
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || ""
 
-// declare module "wagmi" {
-//   interface Register {
-//     config: ReturnType<typeof getConfig>
-//   }
-// }
+export const configWagmi = getDefaultConfig({
+  appName: "Pokemon",
+  projectId,
+  chains: [mainnet, sepolia],
+  ssr: true,
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
+})

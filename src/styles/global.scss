@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .text-h3 {
+    @apply font-bold text-blue text-3xl;
+  }
+
+  .text-h4-muted {
+    @apply font-bold text-slate text-2xl;
+  }
+}

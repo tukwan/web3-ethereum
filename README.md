@@ -35,7 +35,7 @@ Pokemon is a web application that allows users to view, list, and interact with 
 Make sure to set up the following environment variables in a `.env` file:
 
 ```sh
-NEXT_PUBLIC_INFURA_PROJECT_ID=your_infura_project_id
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_wallet_connect_project_id
 ```
 
 ## Contributing

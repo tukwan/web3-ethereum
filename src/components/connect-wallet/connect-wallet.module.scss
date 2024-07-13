@@ -1,0 +1,12 @@
+.connect-wallet {
+  > div {
+    flex-direction: column;
+    gap: 0 !important;
+  }
+
+  @screen sm {
+    > div {
+      flex-direction: row;
+    }
+  }
+}

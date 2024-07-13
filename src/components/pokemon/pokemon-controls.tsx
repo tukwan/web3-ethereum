@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useAccount, useSignMessage } from "wagmi"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ArrowIcon } from "@/components/ui/icons"
 import { useCollecting } from "@/hooks/useCollecting"
@@ -15,9 +16,10 @@ type Props = {
 export const PokemonControls = ({ pokemon }: Props) => {
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
-
   const { isCollected, collectPokemon } = useCollecting(pokemon.name)
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
+
+  const isDisabled = !isConnected || isCollected
 
   const handleCollect = async () => {
     try {
@@ -34,9 +36,11 @@ export const PokemonControls = ({ pokemon }: Props) => {
   return (
     <>
       <Button
-        className="my-8 duration-300 hover:scale-110"
+        className={cn("my-8", {
+          "duration-300 hover:scale-105": !isDisabled,
+        })}
         onClick={handleCollect}
-        disabled={isCollected || !isConnected}
+        disabled={isDisabled}
       >
         {isCollected ? "Collected" : "Collect"}
       </Button>

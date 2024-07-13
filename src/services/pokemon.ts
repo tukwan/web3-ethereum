@@ -1,11 +1,11 @@
-import { config } from "@/config"
+import { configApp } from "@/config"
 import { fetchFromApi } from "@/lib/utils"
 
 export const getPokemonList = async () =>
-  (await fetchFromApi(`${config.pokemonApiUrl}?limit=151`)).results
+  (await fetchFromApi(`${configApp.pokemonApiUrl}?limit=151`)).results
 
 export const getPokemonDetails = async (name: string) =>
-  fetchFromApi(`${config.pokemonApiUrl}/${name}`)
+  fetchFromApi(`${configApp.pokemonApiUrl}/${name}`)
 
 export const getPokemonBulbapedia = async (name: string) =>
-  fetchFromApi(`${config.bulbediaUrl}/${name}`, "text")
+  fetchFromApi(`${configApp.bulbediaUrl}/${name}`, "text")
