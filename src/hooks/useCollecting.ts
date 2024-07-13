@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 
 export const useCollecting = (pokemonName: string) => {
   const [isCollected, setIsCollected] = useState(false)

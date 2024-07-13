@@ -16,7 +16,7 @@ type Props = {
 const PokemonsPage = async ({ searchParams }: Props) => {
   const searchQuery = searchParams?.search || ""
   const allPokemons = await getPokemonList()
-  const filteredPokemons = filterPokemons(allPokemons, searchQuery)
+  const filteredPokemons = filterPokemons(allPokemons.slice(0, 10), searchQuery)
 
   return (
     <>

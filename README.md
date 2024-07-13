@@ -27,8 +27,8 @@ Pokemon is a web application that allows users to view, list, and interact with 
 
 ## Getting Started
 
-- `yarn && yarn dev` (for development)
-- `yarn build && yarn start` (for production)
+- `pnpm i && pnpm dev` (for development)
+- `pnpm build && pnpm start` (for production)
 
 ## Environment Variables
 
