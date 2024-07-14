@@ -9,12 +9,12 @@ import { rainbowTheme } from "@/styles/rainbow-theme"
 const queryClient = new QueryClient()
 
 type Props = {
-  cookie: string
+  wagmiCookie: string
   children: React.ReactNode
 }
 
-export function Providers({ children, cookie }: Props) {
-  const initialWagmiState = cookieToInitialState(configWagmi, cookie)
+export function Providers({ children, wagmiCookie }: Props) {
+  const initialWagmiState = cookieToInitialState(configWagmi, wagmiCookie)
 
   return (
     <WagmiProvider config={configWagmi} initialState={initialWagmiState}>

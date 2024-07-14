@@ -14,7 +14,8 @@ export const PokemonLoader = async ({ pokemon }: Props) => {
 const fetchPokemonDetails = async (pokemon: PokemonData) => {
   try {
     const details = await getPokemonDetails(pokemon.name)
-    const image = details.sprites.front_default
+    const image = details.sprites.other["official-artwork"].front_default
+
     const abilities = details.abilities
       .map((ability: { ability: { name: string } }) => ability.ability.name)
       .slice(0, 3)

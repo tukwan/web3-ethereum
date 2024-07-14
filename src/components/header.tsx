@@ -9,6 +9,7 @@ export const Header = () => (
         <h4 className="ml-2 text-h4-muted hidden sm:block">Pokemon List</h4>
       </div>
       <ConnectWallet />
+      {/* <SignIn /> */}
     </div>
     <div className="h-0.5 bg-steel"></div>
   </header>
