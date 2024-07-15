@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { ConnectWallet } from "@/components/connect-wallet"
+import { AuthButton } from "@/components/auth-button"
 
 export const Header = () => (
   <header>
@@ -8,8 +9,12 @@ export const Header = () => (
         <Image src="/logo.svg" alt="logo" width={108} height={26} priority />
         <h4 className="ml-2 text-h4-muted hidden sm:block">Pokemon List</h4>
       </div>
-      <ConnectWallet />
-      {/* <SignIn /> */}
+      <div className="absolute left-0 sm:left-2 top-0 bottom-0 flex items-center">
+        <AuthButton />
+      </div>
+      <div className="absolute right-2 lg:right-6 top-0 bottom-0 flex items-center">
+        <ConnectWallet />
+      </div>
     </div>
     <div className="h-0.5 bg-steel"></div>
   </header>

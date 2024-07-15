@@ -13,8 +13,8 @@ export const PokemonCard = ({ pokemon, className, children }: Props) => (
     <Image
       src={pokemon.image}
       alt={`${pokemon.name} image`}
-      width={96}
-      height={96}
+      width={200}
+      height={200}
       priority
       className="w-full h-[222px] bg-charcoal rounded-t-xl object-contain"
     />

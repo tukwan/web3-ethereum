@@ -1,9 +1,5 @@
-import { NextResponse } from "next/server"
-import { generateNonce } from "siwe"
+import { getNonce } from "@/lib/auth"
 
-export async function GET() {
-  const csrfToken = generateNonce()
-  const res = NextResponse.json({ csrfToken })
-  res.cookies.set("csrfToken", csrfToken, { httpOnly: true, path: "/" })
-  return res
+export function GET() {
+  return getNonce()
 }

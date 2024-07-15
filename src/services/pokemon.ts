@@ -9,3 +9,7 @@ export const getPokemonDetails = async (name: string) =>
 
 export const getPokemonBulbapedia = async (name: string) =>
   fetchFromApi(`${configApp.bulbediaUrl}/${name}`, "text")
+
+// Simulate access to a protected API
+export const getPremiumPokemonList = async () =>
+  (await fetchFromApi(`${configApp.pokemonApiUrl}?limit=16&offset=151`)).results

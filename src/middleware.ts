@@ -1,20 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
-import { updateSession } from "@/lib/auth"
+import { refreshSession, getValidatedSession } from "@/lib/auth"
 
 export async function middleware(req: NextRequest) {
-  const session = req.cookies.get("session")?.value
+  const sessionCookie = req.cookies.get("session")?.value
 
-  // TODO: decrypt vefiry session cookie
-
-  if (!session && req.nextUrl.pathname.startsWith("/hidden")) {
-    return NextResponse.redirect(new URL("/", req.url))
+  if (req.nextUrl.pathname.startsWith("/premium")) {
+    const sessionData = await getValidatedSession(sessionCookie)
+    if (!sessionData) return NextResponse.redirect(new URL("/", req.url))
   }
 
-  if (session && !req.nextUrl.pathname.startsWith("/hidden")) {
-    return NextResponse.redirect(new URL("/hidden", req.url))
-  }
-
-  return await updateSession(req)
+  // TODO: Optmize this to only refresh the session if it's about to expire
+  const res = await refreshSession()
+  return res
 }
 
 export const config = {

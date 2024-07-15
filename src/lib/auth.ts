@@ -1,31 +1,58 @@
-import { SignJWT, jwtVerify } from "jose"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
-import { SiweMessage } from "siwe"
+import { SignJWT, jwtVerify } from "jose"
+import { SiweMessage, generateNonce } from "siwe"
 
-const secretKey = process.env.AUTH_SECRET_KEY
-const key = new TextEncoder().encode(secretKey)
+type Credentials = { message: string; signature: string }
 
-export const encrypt = async (payload: any) =>
+const COOKIE_SESSION = "session"
+const authSecretKey = process.env.AUTH_SECRET_KEY
+const encodedAuthSecretKey = new TextEncoder().encode(authSecretKey)
+
+export const createJWT = async (payload: any) =>
   await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("2h")
-    .sign(key)
+    .setExpirationTime("1h")
+    .sign(encodedAuthSecretKey)
 
-export const decrypt = async (token: string) => {
-  const { payload } = await jwtVerify(token, key, {
+export const verifyJWT = async (token: string) => {
+  const { payload } = await jwtVerify(token, encodedAuthSecretKey, {
     algorithms: ["HS256"],
   })
-
   return payload
 }
 
+const authenticate = async ({ message, signature }: Credentials) => {
+  try {
+    const siwe = new SiweMessage(JSON.parse(message || "{}"))
+
+    // Verify EIP-1271 by calling the .isValidSignature method on the contract
+    // https://github.com/spruceid/siwe/blob/main/packages/siwe/lib/client.ts#L348
+    // https://github.com/spruceid/siwe/blob/main/packages/siwe/lib/utils.ts#L33
+    const result = await siwe.verify({ signature })
+
+    if (!result.success) {
+      throw new Error("Invalid signature.")
+    }
+
+    if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE) {
+      throw new Error("Statement mismatch.")
+    }
+
+    return { address: siwe.address }
+  } catch (error) {
+    console.log("Authentication error: ", error)
+    return null
+  }
+}
+
 export const login = async (req: NextRequest) => {
-  const data = await req.json()
+  const credentials: Credentials = await req.json()
 
   // Authentication using SIWE
-  const user = await authorize(data)
+  const user = await authenticate(credentials)
+
   if (!user) {
     return NextResponse.json(
       { success: false, message: "Authentication failed" },
@@ -33,70 +60,64 @@ export const login = async (req: NextRequest) => {
     )
   }
 
-  const expires = new Date(Date.now() + 10 * 10000)
-  const session = await encrypt({ user, expires })
-  cookies().set("session", session, { expires, httpOnly: true })
+  const sessionToken = await createJWT({ user })
+
+  cookies().set(COOKIE_SESSION, sessionToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1h
+    secure: process.env.NODE_ENV === "production",
+  })
 
   return NextResponse.json({ success: true })
 }
 
 export const logout = async () => {
-  cookies().set("session", "", { expires: new Date(0) })
+  cookies().set(COOKIE_SESSION, "", { expires: new Date(0) })
 
   return NextResponse.json({ success: true })
 }
 
 export const getSession = async () => {
-  const session = cookies().get("session")?.value
-  if (!session) return null
-  const sessionDecrypted = await decrypt(session)
-  return sessionDecrypted || null
+  const sessionCookie = cookies().get(COOKIE_SESSION)?.value
+  const session = await getValidatedSession(sessionCookie)
+
+  if (!session) return NextResponse.json(null, { status: 401 })
+  return NextResponse.json(session)
 }
 
-export const updateSession = async (req: NextRequest) => {
-  const session = req.cookies.get("session")?.value
-  if (!session) return
-
-  const parsed = await decrypt(session)
-  parsed.expires = new Date(Date.now() + 10 * 10000)
-
+export const refreshSession = async () => {
+  const sessionCookie = cookies().get(COOKIE_SESSION)?.value
   const res = NextResponse.next()
-  res.cookies.set({
-    name: "session",
-    value: await encrypt(parsed),
+
+  const session = await getValidatedSession(sessionCookie)
+
+  if (!session) return res
+
+  const sessionToken = await createJWT(session)
+
+  res.cookies.set(COOKIE_SESSION, sessionToken, {
     httpOnly: true,
-    expires: parsed.expires as Date,
-    // secret
-    // nonce
+    expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1h
+    secure: process.env.NODE_ENV === "production",
   })
 
   return res
 }
 
-const authorize = async (credentials: any) => {
+export const getNonce = () => {
+  const csrfToken = generateNonce()
+  return new NextResponse(csrfToken)
+}
+
+export const getValidatedSession = async (
+  sessionCookie: string | undefined
+) => {
+  if (!sessionCookie) return null
+
   try {
-    const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"))
-    // const nextAuthUrl = new URL(process.env.NEXTAUTH_URL)
-
-    console.log("CREDENTIALS", credentials)
-    console.log("SiweMessage ", siwe)
-
-    const result = await siwe.verify({
-      signature: credentials?.signature || "",
-      // domain: nextAuthUrl.host,
-      // nonce: await getCsrfToken({ req }),
-      nonce: "ZmrESFBsQIxt1BE90",
-    })
-
-    console.log("RESULTS", result)
-
-    if (result.success) {
-      return {
-        address: siwe.address,
-      }
-    }
-    return null
-  } catch (e) {
+    return await verifyJWT(sessionCookie)
+  } catch (error) {
+    console.log("Invalid session.", error)
     return null
   }
 }
