@@ -27,14 +27,11 @@ export const PokemonTooltip = ({ pokemon, isVisible }: Props) => {
   return (
     <div
       className={cn(
-        "absolute z-50 bottom-full mb-4 shadow-2xl left-0 right-0 transition-opacity duration-300",
+        "absolute z-50 bottom-full mb-4 shadow-2xl -left-8 sm:left-0 right-0 transition-opacity duration-300 border border-slate rounded-xl min-w-[175px]",
         isVisible ? "visible" : "hidden"
       )}
     >
-      <PokemonCard
-        pokemon={pokemon}
-        className="h-[400px] w-[300px] sm:w-[395px] "
-      >
+      <PokemonCard pokemon={pokemon}>
         {isLoading ? (
           <Spinner className="mt-4" />
         ) : (

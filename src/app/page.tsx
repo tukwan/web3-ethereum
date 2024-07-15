@@ -16,13 +16,13 @@ type Props = {
 const PokemonsPage = async ({ searchParams }: Props) => {
   const searchQuery = searchParams?.search || ""
   const allPokemons = await getPokemonList()
-  const filteredPokemons = filterPokemons(allPokemons, searchQuery)
-  // const filteredPokemons = filterPokemons(allPokemons.slice(0, 10), searchQuery)
+  // const filteredPokemons = filterPokemons(allPokemons, searchQuery)
+  const filteredPokemons = filterPokemons(allPokemons.slice(0, 10), searchQuery)
 
   return (
     <>
       <Search searchQuery={searchQuery} />
-      <div className="flex flex-wrap justify-center gap-x-12 gap-y-9">
+      <div className="grid gap-2 sm:gap-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredPokemons.map((pokemon) => (
           <Suspense key={pokemon.name} fallback={<PokemonPlaceholder />}>
             <PokemonLoader pokemon={pokemon} />

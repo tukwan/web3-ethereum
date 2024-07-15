@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useAccount, useSignMessage } from "wagmi"
 import { SiweMessage } from "siwe"
 
-export default function Sign() {
+export default function ProfilePage() {
   const { address, isConnected, chainId } = useAccount()
   const { signMessageAsync } = useSignMessage()
   const [session, setSession] = useState(null)
@@ -34,9 +34,10 @@ export default function Sign() {
         statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
         uri: window.location.origin,
         version: "1",
+        nonce: "ZmrESFBsQIxt1BE90", // TODO: csrfToken
       })
 
-      const signedMessage = await signMessageAsync({
+      const signature = await signMessageAsync({
         message: message.prepareMessage(),
       })
 
@@ -46,7 +47,7 @@ export default function Sign() {
         method: "POST",
         body: JSON.stringify({
           message: JSON.stringify(message),
-          signedMessage,
+          signature,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -67,9 +68,7 @@ export default function Sign() {
     setSession(null)
   }
 
-  if (!isMounted) {
-    return null
-  }
+  if (!isMounted) return null
 
   return (
     <section>
