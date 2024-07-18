@@ -1,12 +1,12 @@
-# Pokemon
+# Pokemon Web3
 
-Pokemon is a web application that allows users to view, list, and interact with Pokemon using Ethereum blockchain technology.
+Pokemon Web3 is a application that allows users interact with Pokemons using Ethereum blockchain technologies.
 
 ## Live
 
 - [https://pokemon-vert-ten.vercel.app](https://pokemon-vert-ten.vercel.app)
 
-<img width="800" src="https://github.com/user-attachments/assets/2cced527-f23b-46c7-b849-a5c3af0fc614">
+<img width="800" src="https://github.com/user-attachments/assets/cd8492eb-e570-4d20-a820-82081ec2b917">
 
 ## Features
 

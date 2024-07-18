@@ -6,8 +6,8 @@ export const Header = () => (
   <header>
     <div className="relative max-w-screen-2xl mx-auto">
       <div className="flex justify-center items-center py-8">
-        <Image src="/logo.svg" alt="logo" width={108} height={26} priority />
-        <h4 className="ml-2 text-h4-muted hidden sm:block">Pokemon List</h4>
+        <Image src="/logo.svg" alt="logo" width={48} height={48} priority />
+        <h4 className="ml-2 text-h4-muted hidden sm:block">Pokemons</h4>
       </div>
       <div className="absolute left-0 sm:left-2 top-0 bottom-0 flex items-center">
         <AuthButton />
