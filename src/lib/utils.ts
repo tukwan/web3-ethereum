@@ -14,7 +14,14 @@ export const fetchFromApi = async (
       const controller = new AbortController()
       const id = setTimeout(() => controller.abort(), timeout)
 
-      const res = await fetch(url, { signal: controller.signal })
+      const res = await fetch(url, {
+        signal: controller.signal,
+        cache: "force-cache", // force cache for searchParams
+        // next: {
+        //   revalidate: 3600,
+        //   tags: ["pokemon"],
+        // },
+      })
       clearTimeout(id)
 
       if (!res.ok) throw new Error("Failed to fetch data from the API")
