@@ -16,7 +16,7 @@ export const fetchFromApi = async (
 
       const res = await fetch(url, {
         signal: controller.signal,
-        cache: "force-cache", // force cache for searchParams
+        // cache: "force-cache", //  for searchParams
         // next: {
         //   revalidate: 3600,
         //   tags: ["pokemon"],

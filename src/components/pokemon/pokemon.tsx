@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache"
 import { getPokemonDetails } from "@/services/pokemon"
 import { PokemonControls } from "./pokemon-controls"
 import { PokemonCard } from "./pokemon-card"
@@ -8,7 +9,7 @@ type Props = {
 }
 
 export const Pokemon = async ({ pokemon }: Props) => {
-  const pokemonDetails = await fetchPokemonDetails(pokemon)
+  const pokemonDetails = await fetchPokemonDetailsCached(pokemon)
 
   return (
     <PokemonCard pokemon={pokemonDetails} className="h-[506px]">
@@ -45,3 +46,11 @@ const fetchPokemonDetails = async (
     }
   }
 }
+
+const fetchPokemonDetailsCached = unstable_cache(
+  async (pokemon) => fetchPokemonDetails(pokemon),
+  ["pokemon-details"],
+  {
+    // revalidate: 60,
+  }
+)
