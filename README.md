@@ -1,6 +1,6 @@
-# Pokemon Web3
+# Web3 Ethereum
 
-Pokemon Web3 is a application that allows users interact with Pokemons using Ethereum blockchain technologies.
+This application allows users to interact with Pokemons using Ethereum blockchain technologies. It has been developed as an **Interview Assignment Project**.
 
 ## Live
 
@@ -8,14 +8,19 @@ Pokemon Web3 is a application that allows users interact with Pokemons using Eth
 
 <img width="800" src="https://github.com/user-attachments/assets/cd8492eb-e570-4d20-a820-82081ec2b917">
 
+## Design
+Custom Figma design files have been provided for this project.
+
+<img width="600" src="https://github.com/user-attachments/assets/65ab28cb-0c62-4d96-849c-edb84106fd51">
+
 ## Features
 
-- **JWT Tokens & SIWE**: Authorization, session management, and authentication using JSON Web Tokens (JWT) and Sign-In with Ethereum (SIWE).
-- **Basic Authorization**: Implemented basic authorization for user access control (Premium Pokemons).
 - **Wallet Connection Interface**: User-friendly wallet connection interface using RainbowKit.
 - **Ethereum Transaction Signing**: Allow users to "Collect" a Pokemon by signing a simple Ethereum transaction.
-- **Tooltip Preview with Web Scraping**: Display basic Pokemon info using server-side web scraping.
 - **Server-Side Rendering (SSR)**: Ensure enhanced performance and SEO.
+- **Authorization**: Implemented basic authorization for user access control (Premium Pokemons).
+- **JWT & SIWE**: Authorization, session management, and authentication using JSON Web Tokens (JWT) and Sign-In with Ethereum (SIWE).
+- **Tooltip Preview with Web Scraping**: Display basic Pokemon info using server-side web scraping.
 - **Data Fetching and State Management**: Efficient data-fetching and state management with React Query.
 - **Responsive Design**: Optimized for both desktop and mobile viewing.
 
