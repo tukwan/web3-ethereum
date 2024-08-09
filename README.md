@@ -6,9 +6,10 @@ This application allows users to interact with Pokemons using Ethereum blockchai
 
 - [https://pokemon-vert-ten.vercel.app](https://pokemon-vert-ten.vercel.app)
 
-<img width="800" src="https://github.com/user-attachments/assets/cd8492eb-e570-4d20-a820-82081ec2b917">
+<img width="600" src="https://github.com/user-attachments/assets/cd8492eb-e570-4d20-a820-82081ec2b917">
 
 ## Design
+
 Custom Figma design files have been provided for this project.
 
 <img width="600" src="https://github.com/user-attachments/assets/65ab28cb-0c62-4d96-849c-edb84106fd51">

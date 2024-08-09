@@ -26,7 +26,7 @@ export default function RootLayout({ children }: Props) {
       <body className={`${dmSans.className} antialiased bg-navy text-blue`}>
         <Providers wagmiCookie={wagmiCookie}>
           <Header />
-          <div className="container mx-auto px-4 mt-20 max-w-screen-2xl w-full">
+          <div className="container mx-auto px-4 mt-4 sm:mt-20 max-w-screen-2xl w-full">
             {children}
           </div>
         </Providers>

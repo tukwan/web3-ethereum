@@ -10,7 +10,7 @@ const PremiumPokemonsPage = async () => {
 
   return (
     <>
-      <h3 className="text-h3 text-center -mt-12 mb-6">Premium Pokemons</h3>
+      <h3 className="text-h3 text-center sm:-mt-12 mb-6">Premium Pokemons</h3>
       <div className="grid gap-2 sm:gap-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {allPremiumPokemons.map((pokemon) => (
           <Pokemon key={pokemon.name} pokemon={pokemon} />

@@ -1,12 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import { WagmiProvider, cookieToInitialState } from "wagmi"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { configWagmi } from "@/config/wagmi"
 import { rainbowTheme } from "@/styles/rainbow-theme"
-
-const queryClient = new QueryClient()
 
 type Props = {
   wagmiCookie: string
@@ -14,6 +13,7 @@ type Props = {
 }
 
 export function Providers({ children, wagmiCookie }: Props) {
+  const [queryClient] = useState(() => new QueryClient())
   const initialWagmiState = cookieToInitialState(configWagmi, wagmiCookie)
 
   return (
