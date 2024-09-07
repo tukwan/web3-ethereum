@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lhci:
+  lighthouseci:
     name: Performance Budget
     runs-on: ubuntu-latest
     environment: Production
@@ -35,11 +35,11 @@ jobs:
           NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID }}
         run: |
           pnpm install --frozen-lockfile
+          pnpm install -g @lhci/cli@0.14.x
           pnpm run build
 
       - name: Run Lighthouse CI
         run: |
-          pnpm install -g @lhci/cli@0.14.x
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
