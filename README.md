@@ -16,14 +16,14 @@ Custom Figma design files have been provided for this project.
 
 ## Features
 
-- **Wallet Connection Interface**: User-friendly wallet connection interface using RainbowKit.
-- **Ethereum Transaction Signing**: Allow users to "Collect" a Pokemon by signing a simple Ethereum transaction.
-- **Server-Side Rendering (SSR)**: Ensure enhanced performance and SEO.
-- **Authorization**: Implemented basic authorization for user access control (Premium Pokemons).
-- **JWT & SIWE**: Authorization, session management, and authentication using JSON Web Tokens (JWT) and Sign-In with Ethereum (SIWE).
-- **Tooltip Preview with Web Scraping**: Display basic Pokemon info using server-side web scraping.
-- **Data Fetching and State Management**: Efficient data-fetching and state management with React Query.
+- **Wallet Connection**: Seamless wallet connection via RainbowKit for Ethereum transactions.
+- **Transaction Signing**: Users can "Collect" a Pokemon by signing a simple Ethereum transaction.
+- **SSR & SEO**: Enhanced performance and SEO through Server-Side Rendering (SSR).
+- **Authorization**: Basic user access control, including premium Pokemon, using JWT and SIWE for authentication.
+- **Pokemon Info Tooltip**: Display basic Pokemon info using server-side web scraping.
+- **Data Management**: Efficient data fetching and state management with React Query.
 - **Responsive Design**: Optimized for both desktop and mobile viewing.
+- **Performance Monitoring**: Lighthouse CI integration to maintain speed, accessibility, best practices, and SEO standards, with automatic checks on every code push.
 
 ## Tech Stack
 
@@ -38,6 +38,7 @@ Custom Figma design files have been provided for this project.
 - **jose**: Library for JSON Web Tokens (JWT) and other security features.
 - **react-query**: Powerful data-fetching and state management for React.
 - **cheerio**: Library for web scraping and parsing HTML.
+- **lighthouse CI**: Tool for automated performance, accessibility, and SEO checks.
 
 ## Getting Started
 
