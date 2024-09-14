@@ -13,9 +13,18 @@
     "assert": {
       "assertions": {
         "categories:performance": ["warn", { "minScore": 0.5 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 2000 }],
+        "interactive": ["warn", { "maxNumericValue": 5200 }],
+        "speed-index": ["warn", { "maxNumericValue": 4300 }],
         "categories:accessibility": ["warn", { "minScore": 0.7 }],
         "categories:best-practices": ["warn", { "minScore": 0.7 }],
-        "categories:seo": ["warn", { "minScore": 0.7 }]
+        "categories:seo": ["warn", { "minScore": 0.7 }],
+        "resource-summary:script:size": [
+          "warn",
+          { "maxNumericValue": 170000 }
+        ],
+        "resource-summary:image:size": ["warn", { "maxNumericValue": 1000000 }],
+        "resource-summary:total:size": ["warn", { "maxNumericValue": 300000 }]
       }
     },
     "upload": {
