@@ -18,12 +18,10 @@ Custom Figma design files have been provided for this project.
 
 - **Wallet Connection**: Seamless wallet connection via RainbowKit for Ethereum transactions.
 - **Transaction Signing**: Users can "Collect" a Pokemon by signing a simple Ethereum transaction.
-- **SSR & SEO**: Enhanced performance and SEO through Server-Side Rendering (SSR).
 - **Authorization**: Basic user access control, including premium Pokemon, using JWT and SIWE for authentication.
-- **Pokemon Info Tooltip**: Display basic Pokemon info using server-side web scraping.
-- **Data Management**: Efficient data fetching and state management with React Query.
-- **Responsive Design**: Optimized for both desktop and mobile viewing.
-- **Performance Monitoring**: Lighthouse CI integration to maintain speed, accessibility, best practices, and SEO standards, with automatic checks on every code push.
+- **Web Scraping**: Display basic Pokemon info using server-side web scraping.
+- **Responsive**: Optimized for both desktop and mobile viewing.
+- **Performance Budget**: Lighthouse CI integration to maintain speed, accessibility, best practices, and SEO standards, with automatic checks on every code push.
 
 ## Tech Stack
 
